@@ -76,8 +76,8 @@ toggle.addEventListener("click", () => {
     moon.classList.toggle("fas")
 })
 
-const countryModal = document.querySelector(".countryModal");
 
+const countryModal = document.querySelector(".countryModal");
 function showCountryDetail(data) {
     countryModal.classList.toggle("show")
     countryModal.innerHTML = `<button class="back">Back</button>
@@ -89,15 +89,15 @@ function showCountryDetail(data) {
             <h1> ${data.name.common}</h1>
             <div class="modalInfo">
                 <div class="innerLeft inner">
-                    <p><strong>Native Name:</strong> ${data.nativeName}</p>
+                    <p><strong>Native Name:</strong></p>
                     <p><strong>Population:</strong> ${data.population}</p>
                     <p><strong>Region:</strong> ${data.region}</p>
                     <p><strong>Sub-region:</strong> ${data.subregion}</p>
                 </div>
                 <div class="innerRight inner">
                     <p><strong>Capital:</strong> ${data.capital}</p>
-                    <p><strong>Top level Domain:</strong> ${data.topLevelDomain.map(elem=>elem)}</p>
-                    <p><strong>Currencies:</strong> ${data.currencies.map(elem=>elem.name)}</p> 
+                    <p><strong>Top level Domain:</strong></p>
+                    <p><strong>Currencies:</strong></p> 
                     <p><strong>Languages:</strong> ${data.languages}</p> 
                 </div>
             </div>
