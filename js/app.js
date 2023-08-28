@@ -53,6 +53,9 @@ async function getCountry() {
         }, '')}</p> 
                     <p><strong>Languages:</strong> ${Object.keys(languages).map(dd => `${languages[dd]}`).join(', ')} </p> 
                   
+                    <p><strong>Country Border:</strong><button>${data.borders} </button></p>
+                    </div>
+                    <div class="border">
                 </div>
             </div>
         </div>
