@@ -100,12 +100,12 @@ region.forEach(element => {
         Array.from(regionName).forEach(elem => {
             console.log(elem.innerText)
             if (elem.innerText.includes(element.innerText) || element.innerText == "All") {
-                elem.parentElement.parentElement.style.display = "grid"
+                elem.closest('.country').style.display = "grid"
             } else {
-                elem.parentElement.parentElement.style.display = "none"
+                elem.closest('.country').style.display = "none"
             }
         });
-    })
+    });
 });
 
 search1.addEventListener("input", () => {
@@ -118,22 +118,22 @@ search1.addEventListener("input", () => {
     });
 })
 
-toggle.addEventListener("click",()=>{
-    const mode = localStorage.getItem("mode")=="dark"?
-    "light":"dark";
-changeMode(mode);
+toggle.addEventListener("click", () => {
+    const mode = localStorage.getItem("mode") == "dark" ?
+        "light" : "dark";
+    changeMode(mode);
 })
 
-function changeMode (mode) {
-    if(mode == "dark") {
+function changeMode(mode) {
+    if (mode == "dark") {
         document.body.classList.toggle("dark")
         moon.classList.toggle("fas")
     }
-    else{
+    else {
         document.body.classList.remove("dark")
-        moon.classList.remove("fas") 
-    } 
-    localStorage.setItem("mode",mode)
+        moon.classList.remove("fas")
+    }
+    localStorage.setItem("mode", mode)
 }
 const countryModal = document.querySelector(".countryModal");
 function showCountryDetail(data) {
