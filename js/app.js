@@ -16,8 +16,18 @@ if (localStorage.getItem("mode") == undefined) {
 changeMode(localStorage.getItem("mode"))
 async function getCountry() {
 
-    const url = await fetch("https://restcountries.com/v3.1/all");
-    const res = await url.json();
+    // const cachee = localStorage.getItem('data')
+    // console.log(cachee)
+
+    // if(!cachee) {
+        const url = await fetch("https://restcountries.com/v3.1/all");
+        const res = await url.json();
+        // localStorage.setItem('data', JSON.stringify(res))
+    //     cachee = JSON.stringify(res)
+    //     console.log(cachee)
+    // }
+    // const cacheRes = JSON.parse(cachee) ?? []
+
     if (selectedCountry) {
 
         const data = res.find(country => country.name.official === selectedCountry)
@@ -25,8 +35,9 @@ async function getCountry() {
         const languages = data.languages
         const tld = data.tld
         const name = data.name.nativeName
-        console.log(name);
-        console.log(Object.keys(name).map(dd => `<div><p>${name[dd].official}</p> <p>${name[dd].common}</p></div>`).join(''))
+        console.log(data.borders?.reduce((dd, cc) => dd + `<span>${cc}</span>`, ' ') ?? ' ');
+
+        // console.log(Object.keys(name).map(dd => `<div><p>${name[dd].official}</p> <p>${name[dd].common}</p></div>`).join(''))
 
         document.querySelector('.outer').innerHTML = ` <a href="https://gyva.github.io/rest-api-countries-App">
    <button class="back"> <i class="fa fa-arrow-left-long"></i> Back</button>
@@ -52,12 +63,13 @@ async function getCountry() {
             return currencyEl + ` <strong>Currencies:</strong> ${currencies[currency].name}, ${currencies[currency].symbol} `
         }, '')}</p> 
                     <p><strong>Languages:</strong> ${Object.keys(languages).map(dd => `${languages[dd]}`).join(', ')} </p> 
-                  
-                    <p><strong>Country Border:</strong><button>${data.borders} </button></p>
                     </div>
-                    <div class="border">
-                </div>
+                    
             </div>
+            ${data.borders ? 
+            `<div class="border">
+                    <p><strong>Country Border:</strong></p><button>${data.borders?.map((dd) => `<span>${dd}</span>`).join(' ') ?? ' '}</button>
+                </div>` : ''}
         </div>
     </div>`;
     } else {
@@ -73,7 +85,7 @@ function showCountry(data) {
     const country = document.createElement("div");
     country.classList.add("country")
 
-    country.innerHTML = ` <a href="https://gyva.github.io/rest-api-countries-App/?country=${data.name.official}"><div class="country-img">
+    country.innerHTML = ` <a href="/?country=${data.name.official}"><div class="country-img">
     <img src="${data.flags.svg}" alt="">
 </div>
 <div class="country-info">
@@ -91,7 +103,6 @@ function showCountry(data) {
 
 dropDown.addEventListener("click", () => {
     dropElem.classList.toggle("showDropDown");
-    console.log("hello");
 })
 
 const regionName = document.getElementsByClassName("regionName");
@@ -99,9 +110,7 @@ const countryName = document.getElementsByClassName("countryName");
 
 region.forEach(element => {
     element.addEventListener("click", () => {
-        console.log(element);
         Array.from(regionName).forEach(elem => {
-            console.log(elem.innerText)
             if (elem.innerText.includes(element.innerText) || element.innerText == "All") {
                 elem.closest('.country').style.display = "grid"
             } else {
